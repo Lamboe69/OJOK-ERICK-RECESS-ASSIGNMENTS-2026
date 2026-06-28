@@ -4,7 +4,6 @@ import os
 import logging
 from datetime import datetime
 
-# Set up logging to file
 logging.basicConfig(
     filename="student_system.log",
     level=logging.INFO,
@@ -16,7 +15,6 @@ JSON_FILE = "students.json"
 CSV_HEADERS = ["reg_number", "name", "email"]
 
 
-# Custom exception for student-related errors
 class StudentError(Exception):
     pass
 
@@ -123,7 +121,6 @@ def add_student():
         print("Registration number cannot be empty.")
         return
 
-    # Check for duplicate
     records = read_csv()
     if find_student_index(records, reg) != -1:
         print(f"Student with registration number '{reg}' already exists.")
@@ -140,12 +137,10 @@ def add_student():
         print("Invalid email format. Must contain '@' and '.'")
         return
 
-    # Collect additional details for JSON
     address = input("Enter address: ").strip()
     contact = input("Enter contact number: ").strip()
     program = input("Enter program of study: ").strip()
 
-    # Save to CSV
     try:
         records.append({
             "reg_number": reg,
@@ -158,7 +153,6 @@ def add_student():
         print(f"Failed to save: {e}")
         return
 
-    # Save additional details to JSON
     try:
         json_data = read_json()
         json_data.append({
@@ -171,7 +165,6 @@ def add_student():
         log_action(f"Added student {reg} details to JSON")
     except StudentError as e:
         print(f"Failed to save additional details: {e}")
-        # Rollback CSV entry
         records.pop()
         write_csv(records)
         return
@@ -216,7 +209,6 @@ def search_student():
     print(f"Name: {rec['name']}")
     print(f"Email: {rec['email']}")
 
-    # Fetch additional details from JSON
     json_data = read_json()
     for extra in json_data:
         if extra["reg_number"] == reg:
@@ -258,7 +250,6 @@ def update_student():
             return
         rec["email"] = new_email
 
-    # Update CSV
     try:
         records[idx] = rec
         write_csv(records)
@@ -267,7 +258,6 @@ def update_student():
         print(f"Failed to update CSV: {e}")
         return
 
-    # Update JSON details
     json_data = read_json()
     for extra in json_data:
         if extra["reg_number"] == reg:
@@ -282,7 +272,6 @@ def update_student():
                 extra["program"] = prog
             break
     else:
-        # No JSON entry exists; create one
         addr = input("Address: ").strip()
         cnt = input("Contact: ").strip()
         prog = input("Program: ").strip()
@@ -323,7 +312,6 @@ def delete_student():
         print("Deletion cancelled.")
         return
 
-    # Remove from CSV
     try:
         removed = records.pop(idx)
         write_csv(records)
@@ -332,7 +320,6 @@ def delete_student():
         print(f"Failed to delete from CSV: {e}")
         return
 
-    # Remove from JSON
     try:
         json_data = read_json()
         json_data = [j for j in json_data if j["reg_number"] != reg]
@@ -340,7 +327,6 @@ def delete_student():
         log_action(f"Deleted student {reg} details from JSON")
     except StudentError as e:
         print(f"Failed to delete from JSON: {e}")
-        # Rollback CSV
         records.insert(idx, removed)
         write_csv(records)
         return

@@ -1,11 +1,6 @@
-# Assignment 3: Real world application of loop control statements
-# World Cup 2026 Simulation
 
 import random
 
-# Each team: Name, GOAT, LastWC, ContCups, FIFARank, Strength, Form,
-# Injuries, CoachRank, Fans, EPL, LaLiga, SerieA, Bundes, Ligue1, Other,
-# AvgAge, WCExp, Keeper, Defender, Midfielder, Forward
 teams = [
     ["Mexico", 0, 22, 12, 14, 81.2, 10, 1, 18, 5, 2, 3, 1, 0, 1, 19, 27.3, 9, 79, 80, 82, 79],
     ["South Korea", 0, 16, 2, 25, 79.8, 13, 0, 21, 4, 3, 0, 0, 3, 1, 19, 26.9, 11, 76, 82, 84, 85],
@@ -149,7 +144,6 @@ print("=" * 60)
 print("         2026 FIFA WORLD CUP SIMULATION")
 print("=" * 60)
 
-# Show available teams
 print("\nAvailable Teams:")
 print("-" * 60)
 for i in range(len(teams)):
@@ -159,7 +153,6 @@ for i in range(len(teams)):
     print(f"  {i+1:2d}. {name:22s}  Strength: {s:5}  FIFA Rank: {fifa}")
 print("-" * 60)
 
-# Let user pick a team
 choice = input("\nSelect your team (enter number): ")
 index = int(choice) - 1
 
@@ -189,12 +182,8 @@ if injuries == 0:
 print("-" * 60)
 print()
 
-# Convert form (1-15) to morale (0-100)
 morale = int(morale * 7.69)
 
-# ==============================
-# PHASE 1: PRE-TOURNAMENT PREPARATION
-# ==============================
 print("=" * 60)
 print("   PHASE 1: PRE-TOURNAMENT PREPARATION")
 print("=" * 60)
@@ -264,15 +253,11 @@ while not preparation_done:
 
     pass
 
-# ==============================
-# PHASE 2: GROUP STAGE
-# ==============================
 print()
 print("=" * 60)
 print("   PHASE 2: GROUP STAGE")
 print("=" * 60)
 
-# All 48 teams participate in 12 groups of 4
 all_team_names = []
 for t in teams:
     all_team_names.append(t[0])
@@ -286,7 +271,6 @@ group_names = ["Group A", "Group B", "Group C", "Group D", "Group E", "Group F",
 all_tournament_teams = []
 added_country = False
 
-# Assign all 48 teams to 12 groups
 for g in range(12):
     group = []
     for _ in range(4):
@@ -303,16 +287,13 @@ for g in range(12):
     if country in group:
         user_group_index = g
 
-# Store all results for group stage
 all_group_results = []
 
-# First, auto-simulate all non-user groups
 for g in range(12):
     if g == user_group_index:
         continue
     group = groups[g]
     group_results = []
-    # Each team plays each other
     for i in range(4):
         for j in range(i + 1, 4):
             t1 = group[i]
@@ -321,7 +302,6 @@ for g in range(12):
             group_results.append([t1, g1, t2, g2])
     all_group_results.append(group_results)
 
-# Now simulate user's group
 user_group = groups[user_group_index]
 print()
 print(f"  Your Group: {group_names[user_group_index]}")
@@ -329,7 +309,6 @@ print(f"  Teams: {user_group[0]}, {user_group[1]}, {user_group[2]}, {user_group[
 print("  Top 2 + best 8 third-placed advance to Round of 32!")
 print()
 
-# Find user's opponents in the group
 user_opponents = []
 for t in user_group:
     if t != country:
@@ -374,7 +353,6 @@ while user_matches_played < 3:
         print("  Too many injuries! Performance suffers.")
         chance = chance - 20
 
-    # Calculate goals based on chance
     opp_idx = get_team_index(opponent)
     opp_str = teams[opp_idx][5]
     opp_def = teams[opp_idx][19]
@@ -414,7 +392,6 @@ while user_matches_played < 3:
                 print("  One injury healed.")
         print()
 
-# Auto-simulate the remaining matches in user's group (between the 3 opponents)
 for i in range(3):
     for j in range(i + 1, 3):
         t1 = user_opponents[i]
@@ -424,7 +401,6 @@ for i in range(3):
 
 all_group_results.insert(user_group_index, user_group_results)
 
-# Print all group standings
 print()
 print("=" * 60)
 print("   GROUP STAGE RESULTS")
@@ -442,7 +418,6 @@ for g in range(12):
     all_qualified.append(standings[1][0])
     all_third_placed.append(standings[2])
 
-# Sort third-placed teams: points → GD → GS
 all_third_placed.sort(key=lambda x: (x[8], x[7], x[5]), reverse=True)
 for i in range(8):
     all_qualified.append(all_third_placed[i][0])
@@ -459,7 +434,6 @@ for i in range(len(all_qualified)):
 if row != "":
     print(row)
 
-# Check if user qualified
 user_qualified = False
 user_knockout_seed = -1
 for q in range(len(all_qualified)):
@@ -479,9 +453,6 @@ else:
 round_number = 0
 user_in_tournament = user_qualified
 
-# ==============================
-# PHASE 3: KNOCKOUT STAGE
-# ==============================
 if tournament_over:
     pass
 else:
@@ -490,8 +461,6 @@ else:
     print("   PHASE 3: KNOCKOUT STAGE")
     print("=" * 60)
 
-    # Set up knockout bracket for 32 teams
-    # Round of 32 pairings: 1v32, 2v31, ..., 16v17
     round_of_32_pairs = []
     for i in range(16):
         round_of_32_pairs.append([all_qualified[i], all_qualified[31 - i]])
@@ -509,7 +478,6 @@ else:
         print(f"   {current_round_name}")
         print("  " + "=" * 56)
 
-        # Build pairings for this round
         if round_number == 0:
             pairs = round_of_32_pairs
         else:
@@ -517,7 +485,6 @@ else:
             for i in range(0, len(current_round_teams), 2):
                 pairs.append([current_round_teams[i], current_round_teams[i + 1]])
 
-        # Show all matchups
         print()
         print("  Matchups:")
         print("  " + "-" * 40)
@@ -529,19 +496,16 @@ else:
         next_round_teams = []
         user_plays_in = -1
 
-        # Find which match the user is in
         for p in range(len(pairs)):
             if pairs[p][0] == country or pairs[p][1] == country:
                 user_plays_in = p
                 break
 
-        # Simulate all matches
         for p in range(len(pairs)):
             team1 = pairs[p][0]
             team2 = pairs[p][1]
 
             if p == user_plays_in:
-                # User plays this match
                 if strength > 100:
                     strength = 100
                 if morale > 100:
@@ -584,7 +548,6 @@ else:
                     win_chance = win_chance + 10
                     print("  ★ GOAT effect lifts the team!")
 
-                # Determine opponent's defense power
                 opp_name = team2 if team1 == country else team1
                 opp_idx = get_team_index(opp_name)
                 opp_def_power = teams[opp_idx][5] * 0.3 + teams[opp_idx][19] * 0.35 + teams[opp_idx][18] * 0.35
@@ -612,7 +575,6 @@ else:
                     strength = 100
 
             else:
-                # Auto-simulate this match
                 g1, g2 = auto_match(team1, team2)
                 if g1 > g2:
                     winner = team1
@@ -621,7 +583,6 @@ else:
                     winner = team2
                     loser = team1
                 else:
-                    # Draw - winner by penalties
                     if random.randint(0, 1) == 0:
                         winner = team1
                         loser = team2
@@ -638,7 +599,6 @@ else:
             tournament_over = True
             break
 
-        # Show who advanced
         current_round_teams = next_round_teams
         print()
         print(f"  Teams advancing to next round:")
@@ -646,9 +606,6 @@ else:
             print(f"    ★ {t}")
         round_number = round_number + 1
 
-# ==============================
-# FINAL RESULT
-# ==============================
 if strength > 100:
     strength = 100
 if morale > 100:
