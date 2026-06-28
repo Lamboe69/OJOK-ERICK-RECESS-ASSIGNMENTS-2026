@@ -1,0 +1,38 @@
+[
+    {
+        "reg_number": "S001",
+        "address": "123 Moi Avenue, Nairobi",
+        "contact": "0712345678",
+        "program": "Computer Science"
+    },
+    {
+        "reg_number": "S002",
+        "address": "456 Kenyatta Road, Kisumu",
+        "contact": "0723456789",
+        "program": "Information Technology"
+    },
+    {
+        "reg_number": "S003",
+        "address": "789 Uhuru Street, Mombasa",
+        "contact": "0734567890",
+        "program": "Business Administration"
+    },
+    {
+        "reg_number": "S004",
+        "address": "321 River Road, Nakuru",
+        "contact": "0745678901",
+        "program": "Engineering"
+    },
+    {
+        "reg_number": "S005",
+        "address": "654 Forest Lane, Eldoret",
+        "contact": "0756789012",
+        "program": "Medicine"
+    },
+    {
+        "reg_number": "24/U/10592/EVE",
+        "address": "Nkrumah Hall",
+        "contact": "0764052945",
+        "program": "BSSE"
+    }
+]

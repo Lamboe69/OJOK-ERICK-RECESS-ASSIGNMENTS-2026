@@ -1,0 +1,109 @@
+STUDENT RECORD MANAGEMENT SYSTEM - REPORT
+===========================================
+
+1. PROGRAM DESIGN
+-----------------
+
+The Student Record Management System is a menu-driven Python application
+that performs CRUD (Create, Read, Update, Delete) operations on student
+records. The system uses two data storage formats:
+
+  - students.csv: Stores core student data (registration number, name, email)
+  - students.json: Stores additional details (address, contact, program)
+
+The registration number serves as the unique key linking records across
+both files. The system is built with the following structure:
+
+  - init_files(): Creates CSV and JSON files with proper headers if
+    they do not already exist.
+  - add_student(): Collects input, validates it, writes to both CSV
+    and JSON, with rollback on failure.
+  - view_all_students(): Reads and displays all CSV records in a
+    formatted table.
+  - search_student(): Finds a student by registration number and
+    displays details from both files.
+  - update_student(): Modifies existing fields with blank-input
+    preservation and updates both storage files.
+  - delete_student(): Removes a record from both files with a
+    confirmation prompt and rollback on error.
+  - main(): Displays a numbered menu and dispatches to the relevant
+    function in an infinite loop until the user chooses to exit.
+
+2. KEY FUNCTIONS
+----------------
+
+  - read_csv() / write_csv(): Handle all CSV file I/O using
+    csv.DictReader and csv.DictWriter. Return/accept lists of
+    dictionaries for clean data manipulation.
+
+  - read_json() / write_json(): Handle JSON file I/O. JSON stores
+    a list of objects with fields: reg_number, address, contact,
+    program.
+
+  - find_student_index(): Linear search returning the index of a
+    student by registration number, used by search, update, and
+    delete operations.
+
+  - validate_email(): Checks that the email contains '@' and '.'
+    as a basic validation measure.
+
+  - log_action() / log_error(): Centralised logging wrappers that
+    write to student_system.log via Python's logging module with
+    timestamps and severity levels.
+
+3. EXCEPTION HANDLING STRATEGY
+------------------------------
+
+  - Custom Exception: A StudentError class (inheriting from
+    Exception) is raised when critical file operations fail during
+    add/update/delete. The main loop catches this to display a
+    user-friendly message while logging the error.
+
+  - Try/Except/Finally: Every file operation is wrapped in
+    try/except blocks. Specific exceptions are caught first
+    (FileNotFoundError, json.JSONDecodeError, IOError) followed
+    by a generic Exception catch-all. The finally block in
+    read_csv() ensures a list is always returned.
+
+  - Rollback Mechanism: If a CSV write succeeds but the
+    corresponding JSON write fails (or vice versa), the system
+    rolls back the completed operation to maintain data
+    consistency between the two files.
+
+  - KeyboardInterrupt: Caught in the main loop to allow a clean
+    exit when the user presses Ctrl+C.
+
+4. TESTING RESULTS
+------------------
+
+The system was tested with the following scenarios:
+
+  - Adding 5 students with valid data: All records saved
+    correctly in both CSV and JSON.
+
+  - Adding a duplicate registration number: Rejected with
+    appropriate error message; no duplicate entries created.
+
+  - Adding a student with invalid email (missing @): Rejected.
+
+  - Viewing all students: All 5 records displayed in formatted
+    output with correct column alignment.
+
+  - Searching for an existing registration number: Full details
+    returned from both CSV and JSON.
+
+  - Searching for a non-existent registration number: "Not found"
+    message displayed.
+
+  - Updating a student's name and email: Changes reflected in
+    CSV; JSON details remained intact.
+
+  - Deleting a student: Record removed from both CSV and JSON;
+    cancellation (answering "n") left data unchanged.
+
+  - File not found: Missing CSV or JSON files are handled
+    gracefully with empty results rather than crashes.
+
+  - All actions and errors are recorded in student_system.log
+    with appropriate severity levels (INFO for actions, ERROR
+    for failures).

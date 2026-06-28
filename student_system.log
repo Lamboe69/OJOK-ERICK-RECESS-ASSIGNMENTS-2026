@@ -1,0 +1,27 @@
+2026-01-15 09:00:00,000 - INFO - Created students.csv with headers
+2026-01-15 09:00:00,001 - INFO - Created students.json with empty array
+2026-01-15 09:00:15,123 - INFO - Added student S001 to CSV
+2026-01-15 09:00:15,124 - INFO - Added student S001 details to JSON
+2026-01-15 09:01:30,456 - INFO - Added student S002 to CSV
+2026-01-15 09:01:30,457 - INFO - Added student S002 details to JSON
+2026-01-15 09:02:45,789 - INFO - Added student S003 to CSV
+2026-01-15 09:02:45,790 - INFO - Added student S003 details to JSON
+2026-01-15 09:04:00,012 - INFO - Viewed all students
+2026-01-15 09:04:20,345 - INFO - Searched for student S001: found
+2026-01-15 09:04:45,678 - INFO - Searched for student S010: not found
+2026-01-15 09:05:30,901 - INFO - Added student S004 to CSV
+2026-01-15 09:05:30,902 - INFO - Added student S004 details to JSON
+2026-01-15 09:06:15,234 - INFO - Added student S005 to CSV
+2026-01-15 09:06:15,235 - INFO - Added student S005 details to JSON
+2026-01-15 09:07:00,567 - INFO - Updated student S003 in CSV
+2026-01-15 09:07:00,568 - INFO - Updated student S003 details in JSON
+2026-01-15 09:08:10,890 - INFO - Deleted student S004 from CSV
+2026-01-15 09:08:10,891 - INFO - Deleted student S004 details from JSON
+2026-01-15 09:08:30,111 - INFO - Added student S004 to CSV
+2026-01-15 09:08:30,112 - INFO - Added student S004 details to JSON
+2026-01-15 09:09:00,333 - ERROR - CSV file not found during read
+2026-01-15 09:10:00,555 - INFO - User exited the system
+2026-06-28 19:34:58,197 - INFO - Added student 24/U/10592/EVE to CSV
+2026-06-28 19:34:58,224 - INFO - Added student 24/U/10592/EVE details to JSON
+2026-06-28 19:35:03,155 - INFO - Viewed all students
+2026-06-28 19:37:21,838 - INFO - User exited the system
